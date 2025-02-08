@@ -5,13 +5,11 @@
     <!-- Formulario para registrar perro -->
     <form @submit.prevent="registrarPerro" class="mt-4 bg-white p-4 rounded shadow">
       <div v-for="campo in camposPerro" :key="campo.id" class="mb-4">
-
         <label :for="'campo-' + campo.id" class="block text-sm font-bold">{{ campo.label }}</label>
         <select
           v-if="campo.type === 'select'"
           :id="'campo-' + campo.id"
           v-model="formulario[campo.id]"
-
           class="w-full p-2 border rounded"
           required
         >
@@ -57,18 +55,14 @@
       <input
         id="dog-image"
         type="file"
-
         @change="handleFileUpload"
         accept="image/*"
         class="w-full p-2 border rounded"
       />
 
-
-
       <div v-if="imagenPreview" class="mt-4">
         <p class="text-sm font-bold">Vista previa:</p>
         <img :src="imagenPreview" alt="Vista previa del perro" class="w-32 h-32 object-cover rounded shadow" />
-
       </div>
 
       <button type="submit" class="bg-blue-500 text-white p-2 rounded mt-4">Registrar Perro</button>
@@ -85,9 +79,6 @@
     </div>
   </div>
 </template>
-
-
-
 
 <script>
 import { ref } from "vue";
@@ -106,9 +97,8 @@ export default {
       good_with_children: 3,
       good_with_pets: 3,
       space_requirement: null,
-
-      phone: "",      // Nuevo campo
-      address: "",    // Nuevo campo
+      phone: "",
+      address: "",
     });
 
     const camposPerro = [
@@ -122,11 +112,9 @@ export default {
       { id: "space_requirement", label: "Espacio requerido", type: "number" },
     ];
 
-
     const solicitudes = ref([]);
     const imagen = ref(null);
     const imagenPreview = ref(null);
-
 
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
@@ -139,25 +127,19 @@ export default {
     const registrarPerro = async () => {
       try {
         const ownerId = localStorage.getItem("userId");
-
         if (!ownerId) {
           alert("Error: No se ha identificado correctamente el propietario.");
           return;
-
         }
 
         const numericOwnerId = Number(ownerId);
-
         if (isNaN(numericOwnerId) || numericOwnerId <= 0) {
-
           alert("Error: No se ha identificado correctamente el propietario.");
           return;
-
         }
 
         const formData = new FormData();
         formData.append("ownerId", numericOwnerId);
-
 
         Object.keys(formulario.value).forEach((key) => {
           if (formulario.value[key] !== null && formulario.value[key] !== "") {
@@ -169,7 +151,7 @@ export default {
           formData.append("image", imagen.value);
         }
 
-        const response = await axios.post("http://localhost:3000/api/dogs", formData, {
+        await axios.post("http://localhost:3000/api/dogs", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -184,7 +166,6 @@ export default {
 
     const resetForm = () => {
       formulario.value = {
-
         name: "",
         breed: "",
         age: null,
@@ -193,9 +174,8 @@ export default {
         good_with_children: 3,
         good_with_pets: 3,
         space_requirement: null,
-
-        phone: "",     // Nuevo campo
-        address: "",   // Nuevo campo
+        phone: "",
+        address: "",
       };
       imagen.value = null;
       imagenPreview.value = null;
@@ -208,7 +188,6 @@ export default {
       solicitudes,
       handleFileUpload,
       imagenPreview,
-
     };
   },
 };
