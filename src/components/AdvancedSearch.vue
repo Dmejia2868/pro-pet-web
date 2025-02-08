@@ -9,16 +9,32 @@
       <div class="modal-body">
         <form @submit.prevent="buscarPerros">
           <div v-for="field in adopterFields" :key="field.id" class="form-group">
-            <label class="font-weight-bold">{{ field.label }}</label>
 
-            <!-- ✅ Select para "Sí/No" en has_children y has_other_pets -->
-            <select v-if="field.type === 'select'" v-model="form[field.id]" class="form-control">
+            <label :for="'field-' + field.id" class="font-weight-bold">{{ field.label }}</label>
+
+            <!-- Select para "Sí/No" -->
+            <select
+              v-if="field.type === 'select'"
+              :id="'field-' + field.id"
+              v-model="form[field.id]"
+              class="form-control"
+            >
+
               <option :value="true">Sí</option>
               <option :value="false">No</option>
             </select>
 
-            <!-- ✅ Input para números -->
-            <input v-else v-model="form[field.id]" :type="field.type" class="form-control" required />
+
+            <!-- Input para otros tipos (números) -->
+            <input
+              v-else
+              :id="'field-' + field.id"
+              v-model="form[field.id]"
+              :type="field.type"
+              class="form-control"
+              required
+            />
+
           </div>
 
           <button type="submit" class="btn btn-success mt-3">Buscar</button>
@@ -34,7 +50,9 @@ import axios from "axios";
 
 export default {
   props: { isOpen: Boolean },
-  emits: ["close", "resultados"], // Emitimos los resultados al padre
+
+  emits: ["close", "resultados"],
+
   setup(_, { emit }) {
     const form = ref({
       preferred_size: 3,
@@ -56,7 +74,7 @@ export default {
       try {
         const response = await axios.post("http://localhost:3000/api/dogs/search", form.value);
 
-        // Emitimos los resultados al padre y cerramos el modal
+
         emit("resultados", response.data);
         emit("close");
       } catch (error) {
@@ -65,12 +83,15 @@ export default {
     };
 
     return { form, adopterFields, buscarPerros };
-  }
+
+  },
+
 };
 </script>
 
 <style scoped>
-/* 🔥 Modal */
+
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -95,7 +116,8 @@ export default {
   position: relative;
 }
 
-/* 🔴 Botón de cierre */
+
+
 .close-btn {
   position: absolute;
   top: 10px;

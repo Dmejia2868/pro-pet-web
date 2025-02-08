@@ -23,7 +23,13 @@
     </div>
 
     <!-- Modal de búsqueda avanzada -->
-    <AdvancedSearch :isOpen="showModal" @close="showModal = false" @resultados="actualizarListaPerros" />
+
+    <AdvancedSearch
+      :isOpen="showModal"
+      @close="showModal = false"
+      @resultados="actualizarListaPerros"
+    />
+
 
     <div class="row">
       <div v-for="dog in filteredDogs" :key="dog.id" class="col-md-4 mb-4">
@@ -31,17 +37,18 @@
           <img 
             :src="dog.image ? getFullImagePath(dog.image) : defaultImage" 
             class="card-img-top" 
-            alt="Imagen del perro"
+
+            :alt="`Foto de ${dog.name}`"
           />
-<div class="card-body">
-  <p v-if="busquedaAvanzada && typeof dog.score !== 'undefined'" class="text-muted">
-    ⭐ Puntaje: {{ dog.score }}
-  </p>
-  <h5 class="card-title">{{ dog.name }}</h5>
-  <button @click="toggleDetails(dog.id)" class="btn btn-primary">
-    {{ expandedDog === dog.id ? "Ocultar" : "Ver" }}
-  </button>
-</div>
+          <div class="card-body">
+            <p v-if="busquedaAvanzada && typeof dog.score !== 'undefined'" class="text-muted">
+              ⭐ Puntaje: {{ dog.score }}
+            </p>
+            <h5 class="card-title">{{ dog.name }}</h5>
+            <button @click="toggleDetails(dog.id)" class="btn btn-primary">
+              {{ expandedDog === dog.id ? "Ocultar" : "Ver" }}
+            </button>
+          </div>
 
 
           <!-- Información Expandida -->
@@ -76,7 +83,9 @@ export default {
     const expandedDog = ref(null);
     const searchQuery = ref("");
     const showMyDogs = ref(false);
-const busquedaAvanzada = ref(false);
+
+    const busquedaAvanzada = ref(false);
+
     const userId = "current_user_id"; // Reemplaza esto con el identificador real del usuario actual
 
     const toggleDetails = (dogId) => {
@@ -102,36 +111,29 @@ const busquedaAvanzada = ref(false);
       }
     };
 
-const filteredDogs = computed(() => {
-  console.log("User ID:", userId);
-  let filtered = dogs.value.map(dog => ({ ...dog })); // Clonar para mantener los puntajes
 
-  filtered = filtered.filter(
-    (dog) =>
-      dog.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      dog.breed.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
+    const filteredDogs = computed(() => {
+      let filtered = dogs.value.map((dog) => ({ ...dog }));
 
-  if (showMyDogs.value) {
-    filtered = filtered.filter((dog) => dog.createdBy === userId);
-  }
+      filtered = filtered.filter(
+        (dog) =>
+          dog.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+          dog.breed.toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
 
-  return filtered;
-});
+      if (showMyDogs.value) {
+        filtered = filtered.filter((dog) => dog.createdBy === userId);
+      }
 
+      return filtered;
+    });
 
-
-    // 🔍 Actualizar la lista con la búsqueda avanzada
-const actualizarListaPerros = (resultados) => {
-  dogs.value = [...resultados]; // 🔄 Forzar reactividad
-  busquedaAvanzada.value = true;
-  showModal.value = false; 
-
-  console.log("📊 Perros actualizados con puntajes:", resultados); // 🔍 Verifica si los perros tienen `score`
-};
-
-
-
+    const actualizarListaPerros = (resultados) => {
+      dogs.value = [...resultados];
+      busquedaAvanzada.value = true;
+      showModal.value = false;
+      console.log("📊 Perros actualizados con puntajes:", resultados);
+    };
 
 
     cargarPerros();
@@ -147,9 +149,11 @@ const actualizarListaPerros = (resultados) => {
       toggleMyDogs,
       showMyDogs,
       actualizarListaPerros,
-      busquedaAvanzada
+
+      busquedaAvanzada,
     };
-  }
+  },
+
 };
 </script>
 
@@ -211,7 +215,8 @@ const actualizarListaPerros = (resultados) => {
   animation: glow 1.5s infinite alternate;
 }
 
-/* 🌟 Efecto de brillo en la lupa */
+
+
 @keyframes glow {
   from {
     text-shadow: 0 0 5px #ffffff;

@@ -3,7 +3,9 @@
     <div class="row w-100">
       <!-- Contenedor izquierdo con imagen y slogan -->
       <div class="col-md-6 text-center d-flex flex-column align-items-center justify-content-center">
-        <img src="@/assets/cachorros.jpeg" alt="Imagen Representativa" class="img-fluid rounded shadow-lg mb-3" style="max-width: 100%;">
+
+        <img src="@/assets/cachorros.jpeg" alt="Cachorros felices" class="img-fluid rounded shadow-lg mb-3" style="max-width: 100%;">
+
         <h4 class="text-dark">"El amor no se compra, se adopta."</h4>
       </div>
 
@@ -24,12 +26,17 @@
             </a>
             <form @submit.prevent="handleLogin">
               <div class="mb-3">
-                <label class="form-label">Correo</label>
-                <input type="email" class="form-control" v-model="login.email" placeholder="Ingrese su correo" required />
+
+                
+                <label for="login-email" class="form-label">Correo</label>
+                <input id="login-email" type="email" class="form-control" v-model="login.email" placeholder="Ingrese su correo" required />
+
               </div>
               <div class="mb-3">
-                <label class="form-label">Contraseña</label>
-                <input type="password" class="form-control" v-model="login.password" placeholder="Ingrese su contraseña" required />
+                <label for="login-password" class="form-label">Contraseña</label>
+                <input id="login-password" type="password" class="form-control" v-model="login.password" placeholder="Ingrese su contraseña" required />
+
+
               </div>
               <button type="submit" class="btn btn-primary w-100">Ingresar</button>
             </form>
@@ -43,20 +50,26 @@
             </a>
             <form @submit.prevent="handleSignUp">
               <div class="mb-3">
-                <label class="form-label">Usuario</label>
-                <input type="text" class="form-control" v-model="signUp.username" placeholder="Ingrese su nombre de usuario" required />
+
+                <label for="signup-username" class="form-label">Usuario</label>
+                <input id="signup-username" type="text" class="form-control" v-model="signUp.username" placeholder="Ingrese su nombre de usuario" required />
+
               </div>
               <div class="mb-3">
-                <label class="form-label">Correo</label>
-                <input type="email" class="form-control" v-model="signUp.email" placeholder="Ingrese su correo" required />
+                <label for="signup-email" class="form-label">Correo</label>
+                <input id="signup-email" type="email" class="form-control" v-model="signUp.email" placeholder="Ingrese su correo" required />
+
               </div>
               <div class="mb-3">
-                <label class="form-label">Contraseña</label>
-                <input type="password" class="form-control" v-model="signUp.password" placeholder="Ingrese su contraseña" required />
+                <label for="signup-password" class="form-label">Contraseña</label>
+                <input id="signup-password" type="password" class="form-control" v-model="signUp.password" placeholder="Ingrese su contraseña" required />
+
               </div>
               <div class="mb-3">
-                <label class="form-label">Confirmar Contraseña</label>
-                <input type="password" class="form-control" v-model="signUp.confirmPassword" placeholder="Confirme su contraseña" required />
+                <label for="signup-confirm-password" class="form-label">Confirmar Contraseña</label>
+                <input id="signup-confirm-password" type="password" class="form-control" v-model="signUp.confirmPassword" placeholder="Confirme su contraseña" required />
+
+
               </div>
               <button type="submit" class="btn btn-success w-100">Registrarse</button>
             </form>

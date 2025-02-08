@@ -24,6 +24,10 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style scoped>
 
 </style>
+=======
+
+>>>>>>> 701b19c (commit 8)
