@@ -4,17 +4,25 @@ import LoginSignUp from '../pages/LoginSignUp.vue';
 import DogList from '../pages/DogList.vue';
 import Owner from '../pages/Owner.vue';
 
-import AdoptionRequests from '../pages/AdoptionRequests.vue';
+
 
 const routes = [
   { path: '/', component: LoginSignUp },
   { path: '/dashboard', component: Dashboard },
   { path: '/dogslist', component: DogList },
   { path: '/users/owner', component: Owner },
-
   
+  {
+    path: "/request",
+    name: "AdoptionRequest",
+    component: () => import("../pages/AdoptionRequests.vue")
+  },
+  {
+    path: "/adopted-dog",
+    name: "AdoptedDog",
+    component: () => import("../pages/AdoptedDogs.vue")
+  },
 
-  { path: '/requests', component: AdoptionRequests }
 ];
 
 const router = createRouter({
